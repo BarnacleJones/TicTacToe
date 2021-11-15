@@ -48,4 +48,3 @@ var myModule = (function()
 myModule.publicMethod();
 
 
-
