@@ -69,7 +69,8 @@ var gameBoard = (function(){
             let table = document.getElementById(`${i+1}`);
             table.innerText = gameArray[i];
             table.addEventListener("click", updateDisplay);
-        }               
+        }  
+                     
     }
 
     function resetGame(){
@@ -77,6 +78,7 @@ var gameBoard = (function(){
         takenTurn = false;
         player2.turn = false;
         player1.turn = true;
+        // document.getElementById("winningSection").innerText = "";
         gamePlay.startGame();
     }
     return{gameArray, renderBoard, takenTurn, resetGame};
@@ -87,6 +89,7 @@ var gamePlay = function(){
     //score tallys for gameboard interface
     let player1Score = 0;
     let player2Score = 0;
+    let winnerDisplay = document.getElementById("winningSection");
     function score(){
     let player1ScoreTally = document.getElementById("player1Score");
     let player2ScoreTally = document.getElementById("player2Score");
@@ -123,7 +126,7 @@ var gamePlay = function(){
         {
             player1Score++;
             score();
-            alert("player1 wins");
+            winnerDisplay.innerText = "Player 1 wins"
             gameBoard.resetGame();    
         }
 
@@ -137,7 +140,7 @@ var gamePlay = function(){
         (gameBoard.gameArray[2] == "O" && gameBoard.gameArray[4] == "O" && gameBoard.gameArray[6] == "O")) {
             player2Score++;
                 score();
-                alert("player2 wins");
+                winnerDisplay.innerText = "Player 2 wins"
                 gameBoard.resetGame(); 
         }
     }
