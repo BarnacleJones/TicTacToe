@@ -1,6 +1,8 @@
 //notes from study on factory functions and module pattern to refer to:
 
 
+//if you need one of something, use a module
+//multiples(players) create with factories
 
 //create a factory function that returns an object
 

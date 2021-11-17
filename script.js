@@ -1,49 +1,28 @@
-//players stored inside object
-
-const player = (name ,char) => {
+//players stored inside factory function
+const player = (char) => {
 let symbol = char;
 let turn = false;
-
-//add symbol to whichever mark is clicked
-//update the gamearray with that symbol
-function takeTurn(){
-    if (turn) {        
-        console.log(e.target.id)
-        //if it is players turn, then let them make one selection on gamboard
-        //tie that to dom -symbol to whatever mark/update game array
-
-        //if the game array slot is taken then do not allow that to be updated
-    }
-
+return{symbol, turn}
 }
 
-return{symbol, takeTurn, turn}
-}
+//gameboard inside module
+var gameBoard = (function(){       
+    let gameArray = [" ", " ", " ", " ", " ", " ", " ", " ", " "];   
+    let takenTurn = false;     
 
-const player1 = player("player1", "X");
-const player2 = player("player2", "O");
-player1.turn = true;
-
-//store gameboard as array inside object
-//set up html and write function that will render the contents of the gameboard array to the page
-var gameBoard = (function(){
-        
-    let gameArray = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
-    
-
-    //this is event listener function, will update to the players symbol... 
-    //have that working but also want to update the array value to the symbol...switch isnt working
-    function updateDisplay(e){
-        console.log(e)
+    //onclick event to update text in square and relevant array value
+    function updateDisplay(e){        
         let square = document.getElementById(e.target.id)           
         if (player1.turn) {
-            console.log(square)
-            var symbol = player1.symbol;            
-        }
+            var symbol = player1.symbol;  
+            }
         else if (player2.turn) {            
             var symbol = player2.symbol;
-        }
-        //updates relevant array value with players symbol
+            }
+        //if slot in the array is not already taken:
+        let arrayValue = parseInt(square.id);
+        if (gameArray[arrayValue-1] === " ") {            
+        //updates array based on id returned from the square
         switch (square.id) {
             case "1":
                 gameArray[0] = symbol;
@@ -74,37 +53,127 @@ var gameBoard = (function(){
                 break;                                      
             default:
                 break;
+        }        
+        gameBoard.takenTurn = true;
+        gamePlay.determineWin();
+        gamePlay.toggleTurns();        
         }
-        renderBoard();
-        console.log(gameArray)
+        else{console.log("already taken")}
+        renderBoard();    
+          
     };
-
     //draw out contents of gamearray on board
-    function renderBoard(){
+    function renderBoard(){        
     for(var i = 0; i < 10; i++)
         {
             let table = document.getElementById(`${i+1}`);
             table.innerText = gameArray[i];
             table.addEventListener("click", updateDisplay);
-        }
+        }               
     }
 
-    return{gameArray, renderBoard};
+    function resetGame(){
+        gameArray.fill(" ") 
+        takenTurn = false;
+        player2.turn = false;
+        player1.turn = true;
+        gamePlay.startGame();
+    }
+    return{gameArray, renderBoard, takenTurn, resetGame};
 })();
 
-gameBoard.renderBoard();
-
 //object to control the flow of the game
+var gamePlay = function(){
+    //score tallys for gameboard interface
+    let player1Score = 0;
+    let player2Score = 0;
+    function score(){
+    let player1ScoreTally = document.getElementById("player1Score");
+    let player2ScoreTally = document.getElementById("player2Score");
+    player1ScoreTally.innerText = player1Score;
+    player2ScoreTally.innerText = player2Score;
+    }
+    function startGame(){
+        console.log("startgame is engaged");
+        player1.turn = true;
+        gameBoard.renderBoard();        
+}
+    function toggleTurns(){
+        if (player1.turn && gameBoard.takenTurn) {
+            player1.turn = false;
+            player2.turn = true;
+            gameBoard.takenTurn = false;
+        }
+        else if (player2.turn && gameBoard.takenTurn) {
+            player2.turn = false;
+            player1.turn = true;
+            gameBoard.takenTurn = false;
+        }
+        }
+    function determineWin()
+    { 
+        if ((gameBoard.gameArray[0] == "X" && gameBoard.gameArray[1] == "X" && gameBoard.gameArray[2] == "X") ||
+        (gameBoard.gameArray[3] == "X" && gameBoard.gameArray[4] == "X" && gameBoard.gameArray[5] == "X") ||
+        (gameBoard.gameArray[6] == "X" && gameBoard.gameArray[7] == "X" && gameBoard.gameArray[8] == "X") ||
+        (gameBoard.gameArray[0] == "X" && gameBoard.gameArray[3] == "X" && gameBoard.gameArray[6] == "X") ||
+        (gameBoard.gameArray[1] == "X" && gameBoard.gameArray[4] == "X" && gameBoard.gameArray[7] == "X") ||
+        (gameBoard.gameArray[2] == "X" && gameBoard.gameArray[5] == "X" && gameBoard.gameArray[8] == "X") ||
+        (gameBoard.gameArray[0] == "X" && gameBoard.gameArray[4] == "X" && gameBoard.gameArray[8] == "X") ||
+        (gameBoard.gameArray[2] == "X" && gameBoard.gameArray[4] == "X" && gameBoard.gameArray[6] == "X")) 
+        {
+            player1Score++;
+            score();
+            alert("player1 wins");
+            gameBoard.resetGame();    
+        }
 
-//if you need one of something, use a module
-//multiples(players) create with factories
+        else if ((gameBoard.gameArray[0] == "O" && gameBoard.gameArray[1] == "O" && gameBoard.gameArray[2] == "O") ||
+        (gameBoard.gameArray[3] == "O" && gameBoard.gameArray[4] == "O" && gameBoard.gameArray[5] == "O") ||
+        (gameBoard.gameArray[6] == "O" && gameBoard.gameArray[7] == "O" && gameBoard.gameArray[8] == "O") ||
+        (gameBoard.gameArray[0] == "O" && gameBoard.gameArray[3] == "O" && gameBoard.gameArray[6] == "O") ||
+        (gameBoard.gameArray[1] == "O" && gameBoard.gameArray[4] == "O" && gameBoard.gameArray[7] == "O") ||
+        (gameBoard.gameArray[2] == "O" && gameBoard.gameArray[5] == "O" && gameBoard.gameArray[8] == "O") ||
+        (gameBoard.gameArray[0] == "O" && gameBoard.gameArray[4] == "O" && gameBoard.gameArray[8] == "O") ||
+        (gameBoard.gameArray[2] == "O" && gameBoard.gameArray[4] == "O" && gameBoard.gameArray[6] == "O")) {
+            player2Score++;
+                score();
+                alert("player2 wins");
+                gameBoard.resetGame(); 
+        }
+    }
+        //spent hours trying to get this to go...
+        
+        //const winConditions = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]];  
+        //from stackoverflow no idea how this works
+        /*const indexOfAll = (arr, val) => arr.reduce((previousValue, currentValue, index) =>
+        (currentValue === val ? [...previousValue, index] : previousValue), []);
 
+        let combinationX = indexOfAll(gameBoard.gameArray, "X");
+        let combinationO = indexOfAll(gameBoard.gameArray, "O");
+            
+        for (let index = 0; index < winConditions.length; index++) {         
+            
+            if (combinationX === winConditions[index])) 
+            {
+                player1Score++;
+                score();
+                alert("player1 wins");
+                gameBoard.resetGame();            
+            }
+            else if (combinationO === winConditions[index])) 
+            {
+                player2Score++;
+                score();
+                alert("player2 wins");
+                gameBoard.resetGame(); 
+            }           
+        }
+    }*/ 
+    return{startGame, toggleTurns, determineWin}    
+}();
 
-/*Build the functions that allow players to add marks to a specific spot on the board, and then tie it to the DOM, 
-letting players click on the gameboard to place their marker. Don’t forget the logic that keeps players from playing
- in spots that are already taken!
+//global calls
+const player1 = player("X");
+const player2 = player("O");
 
-    Think carefully about where each bit of logic should reside. Each little piece of functionality should be 
-    able to fit in the game, player or gameboard objects.. but take care to put them in “logical” places. 
-    Spending a little time brainstorming here can make your life much easier later!*/
-
+gamePlay.startGame();
