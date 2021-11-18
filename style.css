@@ -1,16 +1,20 @@
 body{
 font-family: 'Road Rage', cursive;
-   width: 40%;
-   margin: auto;
-   text-align: center;
-   font-size: 2em;
-   background-color: mediumaquamarine;   
+width: 40%;
+margin: auto;
+text-align: center;
+font-size: 2em;
+background-color: mediumaquamarine;   
 }
 .gameBoard{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    height: 85vh;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(6, 1fr);
+height: 85vh;
+}
+#gameName{
+    font-size: 4em;
+    margin: 0;
 }
 
 #player1{
@@ -22,55 +26,57 @@ grid-area: 1 / 3 / span 1/ span 1;
 }
 
 #table{
-    grid-area: 3 / 1/ span 4/ span 3;
-    height: 50vh;
-    margin-left: auto;
-    margin-right: auto;
+grid-area: 3 / 1/ span 4/ span 3;
+height: 50vh;
+margin-left: auto;
+margin-right: auto;
+background-color: rgb(89, 21, 199);
+border: 0.5 solid black;
+opacity: .9;
 }
 
 td{
-    font-size: 3em;
-    border: 1px solid black; 
-    height: 2em;
-    width: 2.5em;
+font-size: 3em;
+border: .5px solid black; 
+height: 2em;
+width: 2.5em;
 }
 
-td:hover{
-    background-color: mediumturquoise;
+td:hover, button:hover{
+background-color: mediumaquamarine;
 }
 
 button{
-    grid-area: 7 / 1/ span 1/ span 3;
-    font-size: 1em;
-    /* height: 100%; */
-    width:20%;
-    margin: auto;
+grid-area: 7 / 1/ span 1/ span 3;
+font-size: 1em;
+width:40%;
+margin: auto;
+background-color: rgb(89, 21, 199);
+border: none;
 }
 
 #winningSection{
-    grid-area: 2 / 1/ span 3/ span 3;
-    /* z-index: -1; */
+grid-area: 2 / 1/ span 3/ span 3;
 }
 
 @media (max-width: 1270px) {
     #table{
-        height: 50vh;
-        width: 90%;
-        height: 100%;
+    height: 50vh;
+    width: 90%;
+    height: 100%;
     }
     body{
-        width: 100%;
+    width: 100%;
     }
 }
 
 @media (max-width: 630px) {
     #table{
-        height: 50vh;
-        width: 98%;
-        height: 90%;
+    height: 50vh;
+    width: 98%;
+    height: 90%;
     }
     body{
-        width: 100%;
+    width: 100%;
     }
-
 }
