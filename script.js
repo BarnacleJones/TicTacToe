@@ -8,10 +8,9 @@ return{symbol, turn}
 //gameboard inside module
 var gameBoard = (function(){       
     let gameArray = [" ", " ", " ", " ", " ", " ", " ", " ", " "];   
-    let takenTurn = false;     
-
+    let takenTurn = false;  
     //onclick event to update text in square and relevant array value
-    function updateDisplay(e){        
+    function updateDisplay(e){   
         let square = document.getElementById(e.target.id)           
         if (player1.turn) {
             var symbol = player1.symbol;  
@@ -59,28 +58,38 @@ var gameBoard = (function(){
         gamePlay.toggleTurns();        
         }
         else{console.log("already taken")}
-        renderBoard();    
-          
+        renderBoard(); 
     };
     //draw out contents of gamearray on board
-    function renderBoard(){        
-    for(var i = 0; i < 10; i++)
+    function renderBoard(){               
+    for(var i = 0; i < 10; i++)   
         {
             let table = document.getElementById(`${i+1}`);
             table.innerText = gameArray[i];
+            table.removeEventListener("click", resetGame);
             table.addEventListener("click", updateDisplay);
-        }                       
+        }                         
     }
 
     function resetGame(){
         gameArray.fill(" ") 
-        takenTurn = false;
+        takenTurn = false;        
         player2.turn = false;
         player1.turn = true;
         document.getElementById("winningSection").innerText = "";
         gamePlay.startGame();
     }
-    return{gameArray, renderBoard, takenTurn, resetGame};
+
+    function stopClicking(){
+        for(var i = 0; i < 10; i++)   
+        {
+            let table = document.getElementById(`${i+1}`);
+            table.innerText = '🎉';
+            table.addEventListener("click", resetGame);
+        } 
+    }
+
+    return{gameArray, renderBoard, takenTurn, resetGame, stopClicking};
 })();
 
 //object to control the flow of the game
@@ -89,17 +98,18 @@ var gamePlay = function(){
     let player1Score = 0;
     let player2Score = 0;
     let winnerDisplay = document.getElementById("winningSection");
+
     function score(){
     let player1ScoreTally = document.getElementById("player1Score");
     let player2ScoreTally = document.getElementById("player2Score");
     player1ScoreTally.innerText = player1Score;
     player2ScoreTally.innerText = player2Score;
     }
+
     function startGame(){
-        console.log("startgame is engaged");
         player1.turn = true;
         gameBoard.renderBoard();        
-}
+    }
     function toggleTurns(){
         if (player1.turn && gameBoard.takenTurn) {
             player1.turn = false;
@@ -111,7 +121,7 @@ var gamePlay = function(){
             player1.turn = true;
             gameBoard.takenTurn = false;
         }
-        }
+    }
     function determineWin()
     { 
         if ((gameBoard.gameArray[0] == "X" && gameBoard.gameArray[1] == "X" && gameBoard.gameArray[2] == "X") ||
@@ -125,8 +135,8 @@ var gamePlay = function(){
         {
             player1Score++;
             score();
-            winnerDisplay.innerText = "Player 1 wins"
-            gameBoard.resetGame();    
+            winnerDisplay.innerText = "Player 1 wins";
+            gameBoard.stopClicking();
         }
 
         else if ((gameBoard.gameArray[0] == "O" && gameBoard.gameArray[1] == "O" && gameBoard.gameArray[2] == "O") ||
@@ -140,8 +150,13 @@ var gamePlay = function(){
             player2Score++;
                 score();
                 winnerDisplay.innerText = "Player 2 wins"
-                gameBoard.resetGame(); 
+                gameBoard.stopClicking();                
         }
+
+        // else if (array.forEach(element => {element !== " "; return true;})) {
+        //     winnerDisplay.innerText = "Its a tie!"
+        //     gameBoard.resetGame();
+        // }
     }
         //spent hours trying to get this to go...
         
@@ -179,3 +194,5 @@ const player1 = player("X");
 const player2 = player("O");
 
 gamePlay.startGame();
+
+// document.getElementById("resetButton").addEventListener("click", gameBoard.resetGame());
