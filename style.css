@@ -3,7 +3,7 @@ font-family: 'Road Rage', cursive;
 width: 40%;
 margin: auto;
 text-align: center;
-font-size: 2em;
+font-size: 1em;
 background-color: mediumaquamarine;   
 }
 .gameBoard{
@@ -67,7 +67,7 @@ grid-area: 2 / 1/ span 3/ span 3;
     height: 100%;
     }
     body{
-    width: 100%;
+    width: 60%;
     }
 }
 
@@ -80,5 +80,5 @@ grid-area: 2 / 1/ span 3/ span 3;
     body{
     width: 100%;
     }
-    button{}
+    /* button{} */
 }
