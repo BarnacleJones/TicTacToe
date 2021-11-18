@@ -79,7 +79,7 @@ var gameBoard = (function(){
         document.getElementById("winningSection").innerText = "";
         gamePlay.startGame();
     }
-
+    //Function to prevent clicking when game is over
     function stopClicking(){
         gameArray.fill(" ");
         for(var i = 0; i < 10; i++)   
@@ -99,7 +99,7 @@ var gamePlay = function(){
     let player1Score = 0;
     let player2Score = 0;
     let winnerDisplay = document.getElementById("winningSection");
-
+    //scoring function
     function score(){
     let player1ScoreTally = document.getElementById("player1Score");
     let player2ScoreTally = document.getElementById("player2Score");
@@ -123,6 +123,7 @@ var gamePlay = function(){
             gameBoard.takenTurn = false;
         }
     }
+    //determine win - would like to revisit this as I progress, I am 100% sure there is a better way to do this
     function determineWin()
     { 
         if ((gameBoard.gameArray[0] == "X" && gameBoard.gameArray[1] == "X" && gameBoard.gameArray[2] == "X") ||
@@ -154,21 +155,36 @@ var gamePlay = function(){
                 gameBoard.stopClicking();                
         }
 
-//need a tie option
-//need to allow players to enter names
-//congratulate winner
-        /*
-//stolen to try and tinker with
-  function isTieCell() {
-    return cells.every((cell) => {
-      return cell.innerText === "X" || cell.innerText === "O";
-    });
-  }*/
-        // else if (array.forEach(element => {element !== " "; return true;})) {
-        //     winnerDisplay.innerText = "Its a tie!"
-        //     gameBoard.resetGame();
-        // }
+        else if ((gameBoard.gameArray[0] == "X" || gameBoard.gameArray[0] == "O") &&
+        (gameBoard.gameArray[1] == "X" || gameBoard.gameArray[1] == "O") &&
+        (gameBoard.gameArray[2] == "X" || gameBoard.gameArray[2] == "O") &&
+        (gameBoard.gameArray[3] == "X" || gameBoard.gameArray[3] == "O") &&
+        (gameBoard.gameArray[4] == "X" || gameBoard.gameArray[4] == "O") &&
+        (gameBoard.gameArray[5] == "X" || gameBoard.gameArray[5] == "O") &&
+        (gameBoard.gameArray[6] == "X" || gameBoard.gameArray[6] == "O") &&
+        (gameBoard.gameArray[7] == "X" || gameBoard.gameArray[7] == "O") &&
+        (gameBoard.gameArray[8] == "X" || gameBoard.gameArray[8] == "O") ) {
+            winnerDisplay.innerText = "Its a tie!"
+            gameBoard.stopClicking();             
+        }
     }
+
+//need to allow players to enter names - textbox? look at event calls
+//congratulate winner        
+
+    return{startGame, toggleTurns, determineWin}    
+}();
+
+//global calls
+const player1 = player("X");
+const player2 = player("O");
+
+gamePlay.startGame();
+
+
+
+//code for future (determining wins attempts)
+
         //spent hours trying to get this to go...
         
         //const winConditions = [[0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]];  
@@ -197,13 +213,3 @@ var gamePlay = function(){
             }           
         }
     }*/ 
-    return{startGame, toggleTurns, determineWin}    
-}();
-
-//global calls
-const player1 = player("X");
-const player2 = player("O");
-
-gamePlay.startGame();
-
-// document.getElementById("resetButton").addEventListener("click", gameBoard.resetGame());
