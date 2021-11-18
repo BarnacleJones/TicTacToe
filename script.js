@@ -69,8 +69,7 @@ var gameBoard = (function(){
             let table = document.getElementById(`${i+1}`);
             table.innerText = gameArray[i];
             table.addEventListener("click", updateDisplay);
-        }  
-                     
+        }                       
     }
 
     function resetGame(){
@@ -78,7 +77,7 @@ var gameBoard = (function(){
         takenTurn = false;
         player2.turn = false;
         player1.turn = true;
-        // document.getElementById("winningSection").innerText = "";
+        document.getElementById("winningSection").innerText = "";
         gamePlay.startGame();
     }
     return{gameArray, renderBoard, takenTurn, resetGame};

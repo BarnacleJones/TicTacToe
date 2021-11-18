@@ -4,8 +4,7 @@ font-family: 'Road Rage', cursive;
    margin: auto;
    text-align: center;
    font-size: 2em;
-   background-color: mediumaquamarine;
-   
+   background-color: mediumaquamarine;   
 }
 .gameBoard{
     display: grid;
@@ -22,18 +21,48 @@ grid-area: 1 / 1/ span 1/ span 1;
 grid-area: 1 / 3 / span 1/ span 1;
 }
 
-
 #table{
     grid-area: 2 / 1/ span 3/ span 3;
+    height: 50vh;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 td{
-    font-size: 1em;
+    font-size: 3em;
     border: 1px solid black; 
     height: 2em;
     width: 2.5em;
 }
 
+td:hover{
+    background-color: mediumturquoise;
+}
+
 #winningSection{
     grid-area: 3 / 1/ span 3/ span 3;
+    z-index: -1;
+}
+
+@media (max-width: 1270px) {
+    #table{
+        height: 50vh;
+        width: 90%;
+        height: 100%;
+    }
+    body{
+        width: 100%;
+    }
+}
+
+@media (max-width: 630px) {
+    #table{
+        height: 50vh;
+        width: 98%;
+        height: 90%;
+    }
+    body{
+        width: 100%;
+    }
+
 }
