@@ -72,7 +72,7 @@ var gameBoard = (function(){
     }
 
     function resetGame(){
-        gameArray.fill(" ") 
+        gameArray.fill(" "); 
         takenTurn = false;        
         player2.turn = false;
         player1.turn = true;
@@ -81,8 +81,9 @@ var gameBoard = (function(){
     }
 
     function stopClicking(){
+        gameArray.fill(" ");
         for(var i = 0; i < 10; i++)   
-        {
+        {   
             let table = document.getElementById(`${i+1}`);
             table.innerText = '🎉';
             table.addEventListener("click", resetGame);
@@ -153,6 +154,16 @@ var gamePlay = function(){
                 gameBoard.stopClicking();                
         }
 
+//need a tie option
+//need to allow players to enter names
+//congratulate winner
+        /*
+//stolen to try and tinker with
+  function isTieCell() {
+    return cells.every((cell) => {
+      return cell.innerText === "X" || cell.innerText === "O";
+    });
+  }*/
         // else if (array.forEach(element => {element !== " "; return true;})) {
         //     winnerDisplay.innerText = "Its a tie!"
         //     gameBoard.resetGame();
